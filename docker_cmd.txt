@@ -1,0 +1,36 @@
+{Requirements}
+pip install pytorch_warmup
+pip install pytorch_metric_learning
+pip install setuptools==59.5.0
+pip install graph_transformer_pytorch
+
+{Docker}
+docker run -it --name teatgt_container --gpus '"device=6"' --ipc=host -v /media/data2:/data -v /home/jhpark/vsgg:/main tokengt_vsgg:jhpark /bin/bash
+docker run -it --name teatgt_container --gpus '"device=6"' --ipc=host -v /media/data2:/data -v /home/jhpark/vsgg:/main teatgt:jhpark /bin/bash
+
+===================================== TEMPURA =====================================
+{TEMPURA Train}
+python TEMPURA_train.py --mode predcls --datasize large --data_path /data/AG/ --lr 1e-5 --warmup 3 --nepoch 30 --save_path checkpoint/tempura/
+
+{TEMPURA Test}
+python TEMPURA_test.py --mode predcls --datasize mini --data_path /data/AG/ --model_path checkpoint/tempura/predcls/models/best_Mrecall_model.tar --output_path output/tempura/
+
+{TEMPURA Evaluate}
+python TEMPURA_evaluate.py --mode predcls --datasize mini --data_path /data/AG/ --model_path checkpoint/tempura/predcls/models/best_Mrecall_model.tar --output_path output/tempura/
+
+{TEMPURA Arbitrary Direct Inference}
+python KCC_TEMPURA.py --mode sgdet --model_path checkpoint/tempura/sgdet/models/best_Mrecall_model.tar --output_path kcc_demo/output/
+
+===================================== TEAT-GT =====================================
+{TEATGT Train}
+python TEATGT_train.py --mode predcls --datasize large --data_path /data/AG/ --lr 1e-5 --warmup 3 --nepoch 30 --lap_node_id --lap_node_id_k 50 --type_id --save_path checkpoint/TEATGT/ --use_ctl_loss --use_cons_str_loss --use_cons_sem_loss
+
+{TEATGT Test}
+python TEATGT_test.py --mode predcls --datasize mini --data_path /data/AG/ --model_path checkpoint/TEATGT/predcls/models/best_Mrecall_model.tar --output_path output/teatgt/ --lap_node_id --lap_node_id_k 50 --type_id
+
+{TEATGT Evaluate}
+python TEATGT_evaluate.py --mode predcls --datasize mini --data_path /data/AG/ --model_path checkpoint/TEATGT/predcls/models/best_Mrecall_model.tar --output_path output/teatgt/ --lap_node_id --lap_node_id_k 50 --type_id
+
+{TEATGT Arbitrary Direct Inference}
+python KCC_TEATGT.py --mode sgdet --model_path checkpoint/TEATGT/sgdet/models/best_Mrecall_model.tar --output_path kcc_demo/output/ --lap_node_id --lap_node_id_k 50 --type_id
+

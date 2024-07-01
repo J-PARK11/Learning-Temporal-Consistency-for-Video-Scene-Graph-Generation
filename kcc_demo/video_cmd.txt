@@ -1,0 +1,4 @@
+pwd: /main/kcc_demo/dataset
+ffmpeg -i P03/video/P03.avi -vf fps=2 P03/frame/P03_%04d.png
+ffmpeg -i P12/video/P12.avi -vf fps=2 P12/frame/P12_%04d.png
+ffmpeg -i P42/video/P42.avi -vf fps=2 P42/frame/P42_%04d.png

@@ -1,0 +1,167 @@
+ {
+    "version": "0.2.0",
+    "configurations": [
+        
+        // ===== Video Scene Graph Generation: Learning Temporal Consistency for Video Scene Graph generation. ===== //
+        // ============ {TEMPURA(AG), TEAT-GT(AG), TEAT-GT(VidVRD)} ============ //
+
+        // ========================= {TEAT-GT(AG)} ========================= //
+        // ======== [Train, Test, Evaluate : PredCLS, SGCLS, SGDET] ======== //
+        {
+            "name": "TEAT-GT_Train.py",             // TEAT-GT Train
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "--mode", "sgdet",                // [predcls, sgcls, sgdet]
+                "--datasize", "large",              // [large, mini]
+                "--data_path", "/data/AG/",         // [AG, VidVRD]
+                "--lr", "1e-5",
+                "--warmup", "2",
+                "--nepoch", "20",
+                "--save_path", "checkpoint/TEATGT/",
+                "--lap_node_id",
+                "--lap_node_id_k", "50",
+                "--type_id",
+                "--use_ctl_loss",          
+                "--use_cons_str_loss",
+                "--use_cons_sem_loss"
+            ],
+            "program": "TEATGT_train.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+
+        {
+            "name": "TEAT-GT_Test.py",              // TEAT-GT Test
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "--mode", "predcls",                // [predcls, sgcls, sgdet]
+                "--datasize", "mini",               // [large, mini]
+                "--data_path", "/data/AG/",         // [AG, VidVRD]
+                "--model_path", "checkpoint/TEATGT/predcls/models/best_Mrecall_model.tar",
+                "--output_path", "output/teatgt/",
+                "--lap_node_id",
+                "--lap_node_id_k", "50",
+                "--type_id",
+            ],
+            "program": "TEATGT_test.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+
+        {
+            "name": "TEAT-GT_Evaluate.py",          // TEAT-GT Evaluate
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "--mode", "predcls",                // [predcls, sgcls, sgdet]
+                "--datasize", "mini",               // [large, mini]
+                "--data_path", "/data/AG/",         // [AG, VidVRD]
+                "--model_path", "checkpoint/TEATGT/predcls/models/best_Mrecall_model.tar",
+                "--output_path", "output/teatgt/",
+                "--lap_node_id",
+                "--lap_node_id_k", "50",
+                "--type_id",
+            ],
+            "program": "TEATGT_evaluate.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+
+        {
+            "name": "KCC_TEATGT.py",          // KCC용 TEATGT
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "--mode", "sgdet",                // [predcls, sgcls, sgdet]
+                "--lap_node_id",
+                "--lap_node_id_k", "50",
+                "--type_id",
+                "--model_path", "checkpoint/TEATGT/sgdet/models/best_Mrecall_model.tar",
+                "--output_path", "kcc_demo/output/"
+            ],
+            "program": "KCC_TEATGT.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+
+        // =========================== {TEMPURA} =========================== //
+        // ======== [Train, Test, Evaluate : PredCLS, SGCLS, SGDET] ======== //
+        {
+            "name": "TEMPURA_Train.py",             // TEMPURA Train
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "--mode", "predcls",                // [predcls, sgcls, sgdet]
+                "--datasize", "large",              // [large, mini]
+                "--data_path", "/data/AG/",         // [AG, VidVRD]
+                "--lr", "1e-5",
+                "--warmup", "3",
+                "--nepoch", "30",
+                "--save_path", "checkpoint/dump/"
+            ],
+            "program": "TEMPURA_train.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+
+        {
+            "name": "TEMPURA_Test.py",              // TEMPURA Test
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "--mode", "predcls",                // [predcls, sgcls, sgdet]
+                "--datasize", "mini",               // [large, mini]
+                "--data_path", "/data/AG/",         // [AG, VidVRD]
+                "--model_path", "checkpoint/tempura/predcls/models/best_Mrecall_model.tar",
+                "--output_path", "output/tempura/"
+            ],
+            "program": "TEMPURA_test.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+
+        {
+            "name": "TEMPURA_Evaluate.py",          // TEMPURA Evaluate
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "--mode", "predcls",                // [predcls, sgcls, sgdet]
+                "--datasize", "mini",               // [large, mini]
+                "--data_path", "/data/AG/",         // [AG, VidVRD]
+                "--model_path", "checkpoint/tempura/predcls/models/best_Mrecall_model.tar",
+                "--output_path", "output/tempura/"
+            ],
+            "program": "TEMPURA_evaluate.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+
+        {
+            "name": "KCC_TEMPURA.py",          // KCC용 TEMPURA
+            "type": "python",
+            "request": "launch",
+            "args": [
+                "--mode", "sgdet",                // [predcls, sgcls, sgdet]
+                "--model_path", "checkpoint/tempura/sgdet/models/best_Mrecall_model.tar",
+                "--output_path", "kcc_demo/output/"
+            ],
+            "program": "KCC_TEMPURA.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+        },
+
+
+        // ========================= {Arbitrary} ========================= //
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+        // ============================== eos ============================== //
+
+    ]
+}

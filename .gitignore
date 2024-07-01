@@ -1,0 +1,12 @@
+__pycache__/
+checkpoint/
+kcc_demo/dataset/
+lib/__pycache__/
+output/
+tools/fasterRCNN/
+tools/utils/word_vectors/
+tools/utils/draw_rectangles/
+tools/utils/fpn/
+tools/TokenGT/fairseq/
+tools/TokenGT/scripts/
+dataloader/AG/object_bbox_and_relationship_filtersmall.pkl
